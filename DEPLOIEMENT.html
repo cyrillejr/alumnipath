@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guide de déploiement AlumniPath — Neon + Vercel</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
+<style>
+:root{--navy:#0f2044;--blue:#1e40af;--emerald:#059669;--gold:#d4a017;--cream:#faf8f4;--muted:#64748b;--border:rgba(30,64,175,0.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--navy);line-height:1.6}
+header{background:var(--navy);padding:32px 5%;display:flex;align-items:center;gap:16px}
+.logo{width:40px;height:40px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.logo svg{width:22px;height:22px;fill:white}
+header h1{font-family:'Playfair Display',serif;font-size:22px;color:white}
+header p{font-size:13px;color:rgba(255,255,255,0.5);margin-top:2px}
+.container{max-width:860px;margin:0 auto;padding:48px 24px}
+.intro{background:white;border-radius:14px;border:1px solid var(--border);padding:28px;margin-bottom:40px}
+.intro h2{font-size:18px;font-weight:500;margin-bottom:8px;color:var(--navy)}
+.intro p{font-size:14px;color:var(--muted);line-height:1.7}
+.url-box{margin-top:16px;background:rgba(30,64,175,0.06);border:1px dashed rgba(30,64,175,0.3);border-radius:8px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.url-label{font-size:11px;font-weight:500;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.url-val{font-family:'DM Mono',monospace;font-size:13px;color:var(--navy);word-break:break-all}
+.step-section{margin-bottom:40px}
+.step-header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.step-num{width:38px;height:38px;border-radius:50%;background:var(--navy);color:white;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-num.done{background:var(--emerald)}
+.step-header h3{font-size:17px;font-weight:500;color:var(--navy)}
+.step-header p{font-size:13px;color:var(--muted);margin-top:2px}
+.card{background:white;border-radius:12px;border:1px solid var(--border);padding:22px;margin-bottom:14px}
+.card h4{font-size:13px;font-weight:500;margin-bottom:12px;color:var(--navy)}
+ol,ul{padding-left:20px}
+li{font-size:14px;color:var(--muted);margin-bottom:8px;line-height:1.7}
+li strong{color:var(--navy);font-weight:500}
+code{font-family:'DM Mono',monospace;font-size:12px;background:rgba(15,32,68,0.06);padding:2px 6px;border-radius:4px;color:var(--navy)}
+.code-block{background:#0f2044;border-radius:10px;padding:18px 20px;margin:12px 0;overflow-x:auto}
+.code-block pre{font-family:'DM Mono',monospace;font-size:12.5px;color:#e2e8f0;line-height:1.8;white-space:pre}
+.code-block .comment{color:#64748b}
+.code-block .key{color:#93c5fd}
+.code-block .val{color:#6ee7b7}
+.code-block .cmd{color:#fde68a}
+.highlight{background:rgba(5,150,105,0.08);border:1px solid rgba(5,150,105,0.2);border-radius:8px;padding:12px 16px;font-size:13px;color:#047857;display:flex;gap:10px;align-items:flex-start;margin:12px 0}
+.highlight svg{width:16px;height:16px;fill:#059669;flex-shrink:0;margin-top:1px}
+.warning{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:8px;padding:12px 16px;font-size:13px;color:#92400e;display:flex;gap:10px;align-items:flex-start;margin:12px 0}
+.warning svg{width:16px;height:16px;fill:#d97706;flex-shrink:0;margin-top:1px}
+.env-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+.env-table th{text-align:left;padding:8px 12px;background:rgba(15,32,68,0.04);color:var(--muted);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border)}
+.env-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--navy);vertical-align:top}
+.env-table td:first-child{font-family:'DM Mono',monospace;font-size:12px;color:var(--blue);width:200px}
+.env-table td:last-child{font-size:12px;color:var(--muted)}
+.final-box{background:var(--navy);border-radius:14px;padding:32px;text-align:center;margin-top:40px}
+.final-box h3{font-family:'Playfair Display',serif;font-size:22px;color:white;margin-bottom:8px}
+.final-box p{font-size:14px;color:rgba(255,255,255,0.55);margin-bottom:20px}
+.final-url{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:14px 20px;font-family:'DM Mono',monospace;font-size:13px;color:#6ee7b7;word-break:break-all;margin-bottom:20px}
+.btn-deploy{display:inline-flex;align-items:center;gap:8px;background:#059669;color:white;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none;transition:background .2s;cursor:pointer;border:none}
+.btn-deploy:hover{background:#047857}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.tag-blue{background:rgba(30,64,175,0.1);color:var(--blue)}
+.tag-green{background:rgba(5,150,105,0.1);color:#059669}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+  </div>
+  <div>
+    <h1>AlumniPath — Guide de déploiement</h1>
+    <p>Connexion Neon Database + déploiement Vercel · NGABETKONGUEUN CYRILLE JUNIOR — 23U2960</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Votre URL de déploiement cible</h2>
+    <p>Une fois les étapes complétées, votre application sera accessible à cette adresse :</p>
+    <div class="url-box">
+      <div>
+        <div class="url-label">URL Vercel</div>
+        <div class="url-val">https://alumnipath-ngabetkongueun-cyrille-junior-23u2960.vercel.app</div>
+      </div>
+      <span class="tag tag-blue">Production</span>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 1 : NEON -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div>
+        <h3>Créer la base de données sur Neon</h3>
+        <p>PostgreSQL serverless gratuit — aucune carte bancaire requise</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>A. Créer votre compte et votre base</h4>
+      <ol>
+        <li>Aller sur <strong>console.neon.tech</strong> → cliquer <strong>"Sign Up"</strong> (connexion avec GitHub recommandée)</li>
+        <li>Cliquer <strong>"New Project"</strong></li>
+        <li>Nom du projet : <code>alumnipath</code></li>
+        <li>Région : choisir <strong>AWS EU West 2 (London)</strong> — la plus proche du Cameroun</li>
+        <li>Nom de la base de données : <code>alumnipath</code></li>
+        <li>Cliquer <strong>"Create Project"</strong> ✓</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h4>B. Récupérer vos chaînes de connexion</h4>
+      <ol>
+        <li>Dans le dashboard Neon → cliquer sur votre projet <strong>alumnipath</strong></li>
+        <li>Section <strong>"Connection Details"</strong> (en haut à droite)</li>
+        <li>Dans le menu déroulant, sélectionner <strong>"Prisma"</strong></li>
+        <li>Vous verrez deux URLs — copiez-les séparément :</li>
+      </ol>
+      <div class="code-block">
+<pre><span class="comment"># URL 1 — DATABASE_URL (avec pooler, pour l'application)</span>
+<span class="key">DATABASE_URL</span>=<span class="val">"postgresql://alumnipath_owner:xxxxxxxx@ep-xxx-pooler.eu-west-2.aws.neon.tech/alumnipath?sslmode=require&pgbouncer=true&connect_timeout=15"</span>
+
+<span class="comment"># URL 2 — DIRECT_URL (sans pooler, pour les migrations)</span>
+<span class="key">DIRECT_URL</span>=<span class="val">"postgresql://alumnipath_owner:xxxxxxxx@ep-xxx.eu-west-2.aws.neon.tech/alumnipath?sslmode=require"</span></pre>
+      </div>
+      <div class="warning">
+        <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        La différence : DATABASE_URL contient <code>-pooler</code> dans le hostname et <code>pgbouncer=true</code>. DIRECT_URL n'a pas ces paramètres. Les deux sont nécessaires.
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 2 : GITHUB -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div>
+        <h3>Pousser le code sur GitHub</h3>
+        <p>Vercel déploie directement depuis un dépôt GitHub</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <ol>
+        <li>Aller sur <strong>github.com</strong> → <strong>"New repository"</strong></li>
+        <li>Nom du dépôt : <code>alumnipath</code> · Visibilité : <strong>Public</strong> → <strong>"Create repository"</strong></li>
+        <li>Sur votre machine, dans le dossier du projet :</li>
+      </ol>
+      <div class="code-block">
+<pre><span class="cmd">git init</span>
+<span class="cmd">git add .</span>
+<span class="cmd">git commit -m "feat: AlumniPath initial commit"</span>
+<span class="cmd">git branch -M main</span>
+<span class="cmd">git remote add origin https://github.com/VOTRE-USERNAME/alumnipath.git</span>
+<span class="cmd">git push -u origin main</span></pre>
+      </div>
+      <div class="highlight">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Remplacer VOTRE-USERNAME par votre nom d'utilisateur GitHub exact.
+      </div>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 3 : VERCEL -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div>
+        <h3>Déployer sur Vercel avec le bon nom</h3>
+        <p>Configuration du projet pour obtenir l'URL exacte demandée</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>A. Importer le projet</h4>
+      <ol>
+        <li>Aller sur <strong>vercel.com</strong> → <strong>"Add New Project"</strong></li>
+        <li>Connecter votre compte GitHub si ce n'est pas fait</li>
+        <li>Sélectionner le dépôt <strong>alumnipath</strong> → <strong>"Import"</strong></li>
+        <li>Framework : Next.js (détecté automatiquement)</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h4>B. Configurer le nom du projet (IMPORTANT pour l'URL)</h4>
+      <ol>
+        <li>Dans la page de configuration, cliquer sur <strong>"Project Name"</strong></li>
+        <li>Saisir exactement :</li>
+      </ol>
+      <div class="code-block">
+<pre><span class="val">Alumnipath-NGABETKONGUEUN CYRILLE JUNIOR-23U2960</span></pre>
+      </div>
+      <div class="warning">
+        <svg viewBox="0 0 24 24"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        Vercel convertit les espaces en tirets dans l'URL. Le nom saisi ci-dessus donnera l'URL : <strong>alumnipath-ngabetkongueun-cyrille-junior-23u2960.vercel.app</strong>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>C. Ajouter les variables d'environnement Neon</h4>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Dans la section "Environment Variables" avant de déployer :</p>
+      <table class="env-table">
+        <thead>
+          <tr><th>Variable</th><th>Valeur</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>DATABASE_URL</td>
+            <td>Coller l'URL pooler Neon</td>
+            <td>URL avec <code>-pooler</code> et <code>pgbouncer=true</code></td>
+          </tr>
+          <tr>
+            <td>DIRECT_URL</td>
+            <td>Coller l'URL directe Neon</td>
+            <td>URL sans pooler — pour prisma db push</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="highlight">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Cliquer sur "Add" pour chaque variable, puis mettre la valeur en "Sensitive" (cadenas) pour la sécurité.
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>D. Vérifier la commande de build</h4>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:10px">Dans "Build & Output Settings", la commande de build doit être :</p>
+      <div class="code-block">
+<pre><span class="cmd">prisma generate && prisma db push && next build</span></pre>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:10px">Cela créera automatiquement les tables dans Neon à chaque déploiement.</p>
+    </div>
+
+    <div class="card">
+      <h4>E. Lancer le déploiement</h4>
+      <ol>
+        <li>Cliquer <strong>"Deploy"</strong> → patienter 2–3 minutes</li>
+        <li>✅ Build réussi : vous verrez une preview de l'app</li>
+        <li>Cliquer <strong>"Continue to Dashboard"</strong></li>
+        <li>Votre URL de production sera affichée en haut</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ÉTAPE 4 : SEEDER -->
+  <div class="step-section">
+    <div class="step-header">
+      <div class="step-num">4</div>
+      <div>
+        <h3>Ajouter des données de démonstration (optionnel)</h3>
+        <p>80 réponses réalistes pour tester le tableau de bord</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Sur votre machine locale, créer un fichier <code>.env.local</code> avec vos URLs Neon, puis :</p>
+      <div class="code-block">
+<pre><span class="comment"># Installer les dépendances</span>
+<span class="cmd">npm install</span>
+
+<span class="comment"># Pousser le schéma vers Neon (crée les tables)</span>
+<span class="cmd">npx prisma db push</span>
+
+<span class="comment"># Remplir avec 80 réponses de démo</span>
+<span class="cmd">npm run db:seed</span>
+
+<span class="comment"># Vérifier dans Neon Studio</span>
+<span class="cmd">npx prisma studio</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- RÉSUMÉ FINAL -->
+  <div class="final-box">
+    <h3>🎓 Votre application sera en ligne ici</h3>
+    <p>Après le déploiement réussi sur Vercel</p>
+    <div class="final-url">
+      https://alumnipath-ngabetkongueun-cyrille-junior-23u2960.vercel.app
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="https://console.neon.tech" target="_blank" class="btn-deploy" style="background:#0f2044">
+        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        Ouvrir Neon Console
+      </a>
+      <a href="https://vercel.com/new" target="_blank" class="btn-deploy">
+        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M12 2L2 19.8h20L12 2z"/></svg>
+        Déployer sur Vercel
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

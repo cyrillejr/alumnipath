@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AlumniPath — Université de Yaoundé I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy: #0f2044;
+  --blue: #1e40af;
+  --blue-mid: #2563eb;
+  --emerald: #059669;
+  --gold: #d4a017;
+  --cream: #faf8f4;
+  --slate: #f1f5f9;
+  --text: #1a2340;
+  --muted: #64748b;
+  --white: #ffffff;
+  --border: rgba(30,64,175,0.12);
+  --card-shadow: 0 1px 3px rgba(15,32,68,0.08), 0 8px 32px rgba(15,32,68,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ──────────────────────────────────────────
+   NAV
+────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(250,248,244,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--navy);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.nav-logo-mark svg { width: 20px; height: 20px; fill: white; }
+
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.3px;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.nav-links a:hover { color: var(--navy); }
+
+.nav-cta {
+  display: flex; gap: 10px; align-items: center;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s;
+  border: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--navy);
+}
+
+.btn-ghost:hover { background: var(--slate); }
+
+.btn-primary {
+  background: var(--navy);
+  color: white;
+}
+
+.btn-primary:hover { background: var(--blue); }
+
+.btn-lg {
+  padding: 14px 28px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.btn-emerald {
+  background: var(--emerald);
+  color: white;
+}
+
+.btn-emerald:hover { background: #047857; }
+
+/* ──────────────────────────────────────────
+   HERO
+────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  padding: 120px 5% 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(30,64,175,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(30,64,175,0.08);
+  border: 1px solid rgba(30,64,175,0.2);
+  color: var(--blue);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  background: var(--emerald);
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .5; transform: scale(0.8); }
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--navy);
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--blue);
+  position: relative;
+}
+
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 2px; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+  border-radius: 2px;
+  transform: scaleX(1);
+}
+
+.hero-desc {
+  font-size: 17px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 36px;
+  max-width: 480px;
+  font-weight: 300;
+}
+
+.hero-actions {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.hero-stats {
+  display: flex; gap: 32px; flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex; flex-direction: column; gap: 2px;
+}
+
+.hero-stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+}
+
+.hero-stat-val span { color: var(--emerald); }
+
+.hero-stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Hero card preview */
+.hero-visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.preview-card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  padding: 20px 24px;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.preview-card:nth-child(2) { animation-delay: -3s; }
+
+.preview-card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.preview-card-title {
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+.preview-tag {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px; font-weight: 500;
+}
+
+.tag-green { background: rgba(5,150,105,0.1); color: var(--emerald); }
+.tag-blue  { background: rgba(30,64,175,0.1); color: var(--blue); }
+
+.preview-kpis {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.preview-kpi {
+  background: var(--slate);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.preview-kpi-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--navy);
+}
+
+.preview-kpi-label {
+  font-size: 11px; color: var(--muted); margin-top: 2px;
+}
+
+.preview-bar-group { display: flex; flex-direction: column; gap: 8px; }
+
+.preview-bar-row {
+  display: flex; align-items: center; gap: 8px;
+}
+
+.preview-bar-label { font-size: 11px; color: var(--muted); width: 80px; flex-shrink: 0; }
+
+.preview-bar-track {
+  flex: 1; height: 8px;
+  background: var(--slate);
+  border-radius: 4px; overflow: hidden;
+}
+
+.preview-bar-fill {
+  height: 100%; border-radius: 4px;
+  background: var(--blue);
+}
+
+.preview-bar-count { font-size: 11px; font-weight: 500; color: var(--navy); width: 28px; }
+
+/* ──────────────────────────────────────────
+   HOW IT WORKS
+────────────────────────────────────────── */
+.section {
+  padding: 96px 5%;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.how-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  padding: 28px;
+  position: relative;
+  transition: transform .25s, box-shadow .25s;
+}
+
+.how-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow);
+}
+
+.how-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: rgba(30,64,175,0.1);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.how-icon {
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+
+.how-card h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.how-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ──────────────────────────────────────────
+   FEATURES / STATS
+────────────────────────────────────────── */
+.stats-band {
+  background: var(--navy);
+  padding: 64px 5%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px;
+  text-align: center;
+}
+
+.stat-item-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -1px;
+}
+
+.stat-item-val em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.stat-item-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+  font-weight: 300;
+}
+
+/* ──────────────────────────────────────────
+   CHARTS PREVIEW SECTION
+────────────────────────────────────────── */
+.bg-white-section { background: white; }
+
+.charts-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.chart-preview-card {
+  background: var(--cream);
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  padding: 24px;
+  transition: transform .25s;
+}
+
+.chart-preview-card:hover { transform: translateY(-3px); }
+
+.chart-preview-card:first-child {
+  grid-column: span 2;
+}
+
+.chart-preview-title {
+  font-size: 13px; font-weight: 500; color: var(--navy);
+  margin-bottom: 4px;
+}
+
+.chart-preview-sub {
+  font-size: 12px; color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* ──────────────────────────────────────────
+   CTA SECTION
+────────────────────────────────────────── */
+.cta-section {
+  padding: 96px 5%;
+  text-align: center;
+  background: linear-gradient(135deg, var(--navy) 0%, #1e3a8a 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(212,160,23,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.cta-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+  position: relative;
+}
+
+.cta-section p {
+  font-size: 17px;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 36px;
+  font-weight: 300;
+  position: relative;
+}
+
+.cta-actions {
+  display: flex; justify-content: center; gap: 12px;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.btn-white {
+  background: white;
+  color: var(--navy);
+}
+
+.btn-white:hover { background: var(--slate); }
+
+.btn-outline-white {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+}
+
+.btn-outline-white:hover { background: rgba(255,255,255,0.1); }
+
+/* ──────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────── */
+footer {
+  background: #080f1f;
+  padding: 48px 5% 32px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+}
+
+.footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 260px;
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.footer-col a {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color .2s;
+}
+
+.footer-col a:hover { color: white; }
+
+.footer-bottom {
+  background: #080f1f;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 5%;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.footer-bottom p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ──────────────────────────────────────────
+   RESPONSIVE
+────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 100px 5% 60px;
+    text-align: center;
+  }
+  .hero-visual { display: none; }
+  .hero-stats { justify-content: center; }
+  .hero-actions { justify-content: center; }
+  .nav-links { display: none; }
+  .charts-showcase { grid-template-columns: 1fr; }
+  .charts-showcase .chart-preview-card:first-child { grid-column: span 1; }
+  footer { grid-template-columns: 1fr 1fr; }
+  .section-desc { max-width: 100%; }
+}
+
+/* ──────────────────────────────────────────
+   ANIMATIONS
+────────────────────────────────────────── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: none;
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/></svg>
+    </div>
+    <span class="nav-brand">AlumniPath</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+    <li><a href="#comment">Comment ça marche</a></li>
+    <li><a href="#statistiques">Statistiques</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-cta">
+    <a href="dashboard.html" class="btn btn-ghost">Tableau de bord</a>
+    <a href="formulaire.html" class="btn btn-primary">Participer →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Collecte en cours · Université de Yaoundé I
+    </div>
+
+    <h1>
+      Tracez le chemin<br/>de <em>l'insertion</em><br/>des diplômés
+    </h1>
+
+    <p class="hero-desc">
+      AlumniPath collecte et analyse les données d'insertion professionnelle des diplômés. Contribuez à construire une vision claire de l'avenir académique de l'Université de Yaoundé I.
+    </p>
+
+    <div class="hero-actions">
+      <a href="formulaire.html" class="btn btn-primary btn-lg">
+        <svg width="16" height="16" fill="white" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"/></svg>
+        Remplir le formulaire
+      </a>
+      <a href="#statistiques" class="btn btn-ghost btn-lg">
+        Voir les statistiques
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-val">1 200<span>+</span></span>
+        <span class="hero-stat-label">Diplômés interrogés</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val">68<span>%</span></span>
+        <span class="hero-stat-label">Taux d'emploi</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-val">10</span>
+        <span class="hero-stat-label">Filières couvertes</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visual preview -->
+  <div class="hero-visual">
+    <div class="preview-card" style="animation-duration:6s">
+      <div class="preview-card-header">
+        <span class="preview-card-title">KPIs insertion — 2024</span>
+        <span class="preview-tag tag-green">En direct</span>
+      </div>
+      <div class="preview-kpis">
+        <div class="preview-kpi">
+          <div class="preview-kpi-val">68%</div>
+          <div class="preview-kpi-label">Taux d'emploi global</div>
+        </div>
+        <div class="preview-kpi">
+          <div class="preview-kpi-val">7 mois</div>
+          <div class="preview-kpi-label">Délai d'insertion moyen</div>
+        </div>
+        <div class="preview-kpi">
+          <div class="preview-kpi-val">285K</div>
+          <div class="preview-kpi-label">Salaire moyen (FCFA)</div>
+        </div>
+        <div class="preview-kpi">
+          <div class="preview-kpi-val">1 200</div>
+          <div class="preview-kpi-label">Répondants</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-card" style="animation-duration:8s; animation-delay:-2s">
+      <div class="preview-card-header">
+        <span class="preview-card-title">Délai par filière (mois)</span>
+        <span class="preview-tag tag-blue">BarChart</span>
+      </div>
+      <div class="preview-bar-group">
+        <div class="preview-bar-row">
+          <span class="preview-bar-label">Informatique</span>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:25%;background:#059669"></div></div>
+          <span class="preview-bar-count">3</span>
+        </div>
+        <div class="preview-bar-row">
+          <span class="preview-bar-label">Sci. Éco.</span>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:42%;background:#1d4ed8"></div></div>
+          <span class="preview-bar-count">5</span>
+        </div>
+        <div class="preview-bar-row">
+          <span class="preview-bar-label">Maths</span>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:58%;background:#2563eb"></div></div>
+          <span class="preview-bar-count">7</span>
+        </div>
+        <div class="preview-bar-row">
+          <span class="preview-bar-label">Chimie</span>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:75%;background:#60a5fa"></div></div>
+          <span class="preview-bar-count">9</span>
+        </div>
+        <div class="preview-bar-row">
+          <span class="preview-bar-label">Lettres Mod.</span>
+          <div class="preview-bar-track"><div class="preview-bar-fill" style="width:92%;background:#93c5fd"></div></div>
+          <span class="preview-bar-count">11</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAND -->
+<div class="stats-band">
+  <div class="stat-item fade-in">
+    <div class="stat-item-val">1<em>200</em><span style="color:white">+</span></div>
+    <div class="stat-item-label">Réponses collectées</div>
+  </div>
+  <div class="stat-item fade-in">
+    <div class="stat-item-val"><em>68</em>%</div>
+    <div class="stat-item-label">Diplômés en activité</div>
+  </div>
+  <div class="stat-item fade-in">
+    <div class="stat-item-val"><em>10</em></div>
+    <div class="stat-item-label">Filières représentées</div>
+  </div>
+  <div class="stat-item fade-in">
+    <div class="stat-item-val"><em>285</em>K</div>
+    <div class="stat-item-label">FCFA revenu moyen</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="comment">
+  <div class="section-label">Processus</div>
+  <h2 class="section-title">Comment ça fonctionne ?</h2>
+  <p class="section-desc">Une démarche simple en 3 étapes pour contribuer à la connaissance de l'insertion des diplômés de l'UY1.</p>
+
+  <div class="how-grid">
+    <div class="how-card fade-in">
+      <div class="how-num">01</div>
+      <div class="how-icon" style="background:rgba(30,64,175,0.08)">
+        <svg width="22" height="22" fill="#1e40af" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+      </div>
+      <h3>Remplissez le formulaire</h3>
+      <p>Un questionnaire multi-étapes anonyme de moins de 3 minutes. Vos données personnelles ne sont jamais collectées.</p>
+    </div>
+
+    <div class="how-card fade-in">
+      <div class="how-num">02</div>
+      <div class="how-icon" style="background:rgba(5,150,105,0.08)">
+        <svg width="22" height="22" fill="#059669" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+      </div>
+      <h3>Données sécurisées</h3>
+      <p>Les réponses sont chiffrées, anonymisées et stockées dans une base PostgreSQL sécurisée hébergée sur Supabase.</p>
+    </div>
+
+    <div class="how-card fade-in">
+      <div class="how-num">03</div>
+      <div class="how-icon" style="background:rgba(212,160,23,0.12)">
+        <svg width="22" height="22" fill="#b45309" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+      </div>
+      <h3>Analyse en temps réel</h3>
+      <p>Le tableau de bord agrège automatiquement toutes les réponses et affiche les statistiques et graphiques mis à jour en continu.</p>
+    </div>
+
+    <div class="how-card fade-in">
+      <div class="how-num">04</div>
+      <div class="how-icon" style="background:rgba(124,58,237,0.08)">
+        <svg width="22" height="22" fill="#7c3aed" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+      </div>
+      <h3>Partagez les résultats</h3>
+      <p>Les statistiques sont accessibles publiquement. Partagez-les avec vos collègues, étudiants et partenaires académiques.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES / CHARTS -->
+<section class="section bg-white-section" id="statistiques">
+  <div class="section-label">Tableau de bord</div>
+  <h2 class="section-title">Des analyses descriptives<br/>puissantes et claires</h2>
+  <p class="section-desc">Quatre types de visualisations pour comprendre et communiquer les tendances d'insertion de vos diplômés.</p>
+
+  <div class="charts-showcase">
+    <div class="chart-preview-card fade-in">
+      <div class="chart-preview-title">Tendance d'insertion par promotion (AreaChart)</div>
+      <div class="chart-preview-sub">Évolution du délai moyen selon l'année de diplôme</div>
+      <svg viewBox="0 0 680 140" width="100%" height="140">
+        <defs>
+          <linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#059669" stop-opacity="0.2"/>
+            <stop offset="100%" stop-color="#059669" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <polygon points="0,100 95,82 190,108 285,65 380,85 475,52 570,38 680,44 680,130 0,130" fill="url(#ag)"/>
+        <polyline points="0,100 95,82 190,108 285,65 380,85 475,52 570,38 680,44" fill="none" stroke="#059669" stroke-width="2.5"/>
+        <circle cx="0" cy="100" r="4" fill="#059669"/>
+        <circle cx="95" cy="82" r="4" fill="#059669"/>
+        <circle cx="190" cy="108" r="4" fill="#059669"/>
+        <circle cx="285" cy="65" r="4" fill="#059669"/>
+        <circle cx="380" cy="85" r="4" fill="#059669"/>
+        <circle cx="475" cy="52" r="4" fill="#059669"/>
+        <circle cx="570" cy="38" r="4" fill="#059669"/>
+        <circle cx="680" cy="44" r="4" fill="#059669"/>
+        <text x="0" y="135" font-size="11" fill="#94a3b8" font-family="DM Sans,sans-serif">2018</text>
+        <text x="90" y="135" font-size="11" fill="#94a3b8" font-family="DM Sans,sans-serif">2019</text>
+        <text x="185" y="135" font-size="11" fill="#94a3b8" font-family="DM Sans,sans-serif">2020</text>
+        <text x="280" y="135" font-size="11" fill="#94a3b8" font-family="DM Sans,sans-serif">2021</text>
+        <text x="375" y="135" font-size="11" fill="#94a3b8" font-family="DM Sans,sans-serif">2022</text>
+        <text x="470" y="135" font-size="11" fill="#94a3b8" font-family="DM Sans,sans-serif">2023</text>
+      </svg>
+    </div>
+
+    <div class="chart-preview-card fade-in">
+      <div class="chart-preview-title">Répartition des statuts (PieChart)</div>
+      <div class="chart-preview-sub">Distribution des diplômés par situation actuelle</div>
+      <svg viewBox="0 0 280 140" width="100%" height="140">
+        <circle cx="70" cy="70" r="50" fill="none" stroke="#f1f5f9" stroke-width="24"/>
+        <circle cx="70" cy="70" r="50" fill="none" stroke="#1d4ed8" stroke-width="24" stroke-dasharray="132 182" stroke-dashoffset="25"/>
+        <circle cx="70" cy="70" r="50" fill="none" stroke="#059669" stroke-width="24" stroke-dasharray="44 270" stroke-dashoffset="-107"/>
+        <circle cx="70" cy="70" r="50" fill="none" stroke="#f59e0b" stroke-width="24" stroke-dasharray="40 274" stroke-dashoffset="-151"/>
+        <circle cx="70" cy="70" r="50" fill="none" stroke="#7c3aed" stroke-width="24" stroke-dasharray="20 294" stroke-dashoffset="-191"/>
+        <circle cx="70" cy="70" r="30" fill="white"/>
+        <text x="70" y="66" text-anchor="middle" font-size="14" font-weight="700" fill="#0f2044" font-family="Playfair Display,serif">68%</text>
+        <text x="70" y="80" text-anchor="middle" font-size="10" fill="#64748b" font-family="DM Sans,sans-serif">en activité</text>
+        <g transform="translate(150,20)" font-family="DM Sans,sans-serif">
+          <circle cx="8" cy="10" r="5" fill="#1d4ed8"/>
+          <text x="18" y="14" font-size="11" fill="#334155">Employé(e) — 42</text>
+          <circle cx="8" cy="32" r="5" fill="#059669"/>
+          <text x="18" y="36" font-size="11" fill="#334155">Entrepreneur — 12</text>
+          <circle cx="8" cy="54" r="5" fill="#f59e0b"/>
+          <text x="18" y="58" font-size="11" fill="#334155">En recherche — 11</text>
+          <circle cx="8" cy="76" r="5" fill="#7c3aed"/>
+          <text x="18" y="80" font-size="11" fill="#334155">Études — 15</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="chart-preview-card fade-in">
+      <div class="chart-preview-title">Délai par filière (BarChart)</div>
+      <div class="chart-preview-sub">Mois moyens avant le premier emploi</div>
+      <svg viewBox="0 0 280 140" width="100%" height="140">
+        <text x="0" y="20" font-size="10" fill="#94a3b8" font-family="DM Sans,sans-serif">Informatique</text>
+        <rect x="90" y="10" width="40" height="14" rx="3" fill="#059669"/>
+        <text x="134" y="21" font-size="10" fill="#334155" font-family="DM Sans,sans-serif">3 mois</text>
+        <text x="0" y="46" font-size="10" fill="#94a3b8" font-family="DM Sans,sans-serif">Sci. Éco.</text>
+        <rect x="90" y="36" width="65" height="14" rx="3" fill="#1d4ed8"/>
+        <text x="160" y="47" font-size="10" fill="#334155" font-family="DM Sans,sans-serif">5 mois</text>
+        <text x="0" y="72" font-size="10" fill="#94a3b8" font-family="DM Sans,sans-serif">Mathématiques</text>
+        <rect x="90" y="62" width="90" height="14" rx="3" fill="#2563eb"/>
+        <text x="185" y="73" font-size="10" fill="#334155" font-family="DM Sans,sans-serif">7 mois</text>
+        <text x="0" y="98" font-size="10" fill="#94a3b8" font-family="DM Sans,sans-serif">Chimie</text>
+        <rect x="90" y="88" width="115" height="14" rx="3" fill="#3b82f6"/>
+        <text x="210" y="99" font-size="10" fill="#334155" font-family="DM Sans,sans-serif">9 mois</text>
+        <text x="0" y="124" font-size="10" fill="#94a3b8" font-family="DM Sans,sans-serif">Lettres Mod.</text>
+        <rect x="90" y="114" width="148" height="14" rx="3" fill="#93c5fd"/>
+        <text x="243" y="125" font-size="10" fill="#334155" font-family="DM Sans,sans-serif">11 mois</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>Contribuez à l'avenir<br/>de votre université</h2>
+  <p>Chaque réponse compte. Rejoignez les diplômés qui façonnent la connaissance de l'insertion à l'UY1.</p>
+  <div class="cta-actions">
+    <a href="formulaire.html" class="btn btn-white btn-lg">
+      Participer à l'enquête →
+    </a>
+    <a href="dashboard.html" class="btn btn-outline-white btn-lg">
+      Consulter le dashboard
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">AlumniPath</div>
+    <p class="footer-tagline">Plateforme de suivi de l'insertion professionnelle des diplômés de l'Université de Yaoundé I. Données anonymisées et agrégées.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Application</h4>
+    <ul>
+      <li><a href="formulaire.html">Formulaire</a></li>
+      <li><a href="dashboard.html">Tableau de bord</a></li>
+      <li><a href="#comment">Comment ça marche</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Hébergement</h4>
+    <ul>
+      <li><a href="https://vercel.com" target="_blank">Vercel (app)</a></li>
+      <li><a href="https://supabase.com" target="_blank">Supabase (DB)</a></li>
+      <li><a href="https://github.com" target="_blank">GitHub (code)</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="#">Université de Yaoundé I</a></li>
+      <li><a href="#">Direction des études</a></li>
+      <li><a href="#">support@alumnipath.cm</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2024 AlumniPath · Université de Yaoundé I · Tous droits réservés</p>
+  <p>Données anonymisées · Hébergé au Cameroun</p>
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 100);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
